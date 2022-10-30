@@ -6,10 +6,12 @@ import java.util.Scanner;
 import org.json.JSONObject;
 
 import day06.ChatClient;
+import day06.SocketClient;
 import service.CategoryService;
 
 public class CategoryView {
 	static Scanner sc = new Scanner(System.in);
+	static SocketClient seder;
 	//카테고리 목록 
 	public static void seeCategory(ChatClient chatClient) {
 		System.out.println("[카테고리]");
@@ -54,48 +56,60 @@ public class CategoryView {
 	//카테고리 - 소설
 	public static void seeNovel(ChatClient chatClient) {
  		CategoryService categoryService = new CategoryService();
- 		String categoryId = "1";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "1");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
 	//카테고리 - 시/에세이
 	public static void seeAssay(ChatClient chatClient) {
 		CategoryService categoryService = new CategoryService();
- 		String categoryId = "2";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "2");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
 	//카테고리 - 인문
 	public static void seeHumanities(ChatClient chatClient) {
 		CategoryService categoryService = new CategoryService();
- 		String categoryId = "3";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "3");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
 	//카테고리 - 컴퓨터/IT
 	public static void seeIT(ChatClient chatClient) {
 		CategoryService categoryService = new CategoryService();
- 		String categoryId = "4";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "4");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
 	//카테고리 - 가정/육아
 	public static void seeFamily(ChatClient chatClient) {
 		CategoryService categoryService = new CategoryService();
- 		String categoryId = "5";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "5");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
 	//카테고리 - 요리
 	public static void seeCook(ChatClient chatClient) {
 		CategoryService categoryService = new CategoryService();
- 		String categoryId = "6";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "6");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
@@ -103,32 +117,40 @@ public class CategoryView {
 	//카테고리 - 건강
 	public static void seeHealth(ChatClient chatClient) {
 		CategoryService categoryService = new CategoryService();
- 		String categoryId = "7";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "7");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
 	//카테고리 - 취미/스포츠	
 	public static void seeHobby(ChatClient chatClient) {
 		CategoryService categoryService = new CategoryService();
- 		String categoryId = "8";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "8");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
 	//카테고리 - 경영/경제
 	public static void seeManagement(ChatClient chatClient) {
 		CategoryService categoryService = new CategoryService();
- 		String categoryId = "9";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "9");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
 	//카테고리 - 자기계발
 	public static void seeSelfImprovement(ChatClient chatClient) {
 		CategoryService categoryService = new CategoryService();
- 		String categoryId = "10";
-		categoryService.showCategory(categoryId);
+ 		JSONObject jsonUpdata = new JSONObject();
+ 		jsonUpdata.put("categoryId", "10");
+ 		
+		categoryService.showCategory(jsonUpdata);
 		System.out.println("===================================");
 	}
 	
