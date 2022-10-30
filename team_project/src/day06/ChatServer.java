@@ -1,0 +1,104 @@
+package day06;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import org.json.JSONObject;
+
+public class ChatServer {
+	
+	static Scanner scanner = new Scanner(System.in);
+	ServerSocket serverSocket;
+	ExecutorService threadPool= Executors.newFixedThreadPool(100); 
+	Map<String, SocketClient> chatRoom=Collections.synchronizedMap(new HashMap<>());
+	
+	//server 소켓 생성
+	public void start() throws IOException{
+		serverSocket = new ServerSocket(50041);
+		System.out.println("[server] start");
+		
+		Thread thread = new Thread(()->{
+			try {
+				while(true) {
+					Socket socket= serverSocket.accept();
+					SocketClient sc= new SocketClient(this,socket);
+				}
+			}catch(Exception e) {
+				
+			}
+		});
+		thread.start();
+	}
+	
+	//클라이언트가 들어온것 확인	
+	public void addSocketClient(SocketClient socketClient) {
+		String key=socketClient.chatName+"@"+socketClient.clientIp;
+		chatRoom.put(key, socketClient);
+		System.out.println("입장: "+key);
+		System.out.println("현재 사용자 수: "+chatRoom.size()+"\n");
+	}
+	
+	//클라이언트가 나가는걸 확인
+	public void removeSocketClient(SocketClient socketClient) {
+		String key=socketClient.chatName+"@"+socketClient.clientIp;
+		chatRoom.remove(key);
+		System.out.println("퇴장: "+key);
+		System.out.println("현재 사용자 수: "+chatRoom.size()+"\n");
+	}
+	
+	//server에서 멈주게 될경우
+	public void stop() {
+		try {
+			serverSocket.close();
+			threadPool.shutdownNow();
+			chatRoom.values().stream().forEach(sc->sc.close());
+			System.out.println("[server] close");
+		} catch (IOException e) {
+			System.out.println("[server] close");
+		}
+		
+	}
+	
+	//들어오고 나오고
+	public void income(SocketClient sender) {
+		JSONObject root=new JSONObject();
+		root.put("check", "complete");
+		if(sender.choice.equals("first")&&sender.flag==false) {
+			root.put("message", "환영합니다.");
+		}else {
+			root.put("message", "");
+		}
+		root.put("choice",sender.choice);
+		root.put("flag", sender.flag);
+		String json=root.toString();
+		sender.send(json);
+	}
+
+	public static void main(String[] args) {
+		try {
+			ChatServer chatServer = new ChatServer();
+			chatServer.start();
+			Scanner sc=new Scanner(System.in);
+			while(true) { 
+				String key=sc.nextLine();
+				if(key.equals("q")) {
+					break;
+				}
+			}
+			sc.close();			
+			//TCP 서버 종료
+			chatServer.stop();	
+		}catch(IOException e) {
+			System.out.println("[server] "+e.getMessage());
+		}
+	}
+}
+
