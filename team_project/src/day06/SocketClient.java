@@ -8,10 +8,17 @@ import java.net.Socket;
 
 import org.json.JSONObject;
 
+import DTO.DTOBook;
+import DTO.DTOCategory;
 import DTO.DTOUser;
+import detailView.BookDetailView;
+import service.CategoryService;
 import view.CategoryView;
 
 public class SocketClient {
+
+	public DTOBook bookD = new DTOBook();
+	public DTOCategory categoryD = new DTOCategory();
 
 	//필드
 	ChatServer chatServer;
@@ -69,13 +76,13 @@ public class SocketClient {
 							break;
 							
 						case "menuNo":
-							String menuNo=jsonObject.getString("menuNo");
-							String listNo=jsonObject.getString("listNo");
+							String menuNo = jsonObject.getString("menuNo");
+							String listNo = jsonObject.getString("listNo");
 							JSONObject jsonUpdata=new JSONObject();
 							jsonUpdata=jsonObject.getJSONObject("updata");
 							switch(menuNo) {
 								case "1":
-									seeCategory(this,listNo);
+									seeCategory(this,listNo,jsonUpdata);
 									break;
 								case "2":
 									bestSeller(this,listNo);
@@ -107,8 +114,10 @@ public class SocketClient {
 			}
 		});
 	}
-	public void seeCategory(SocketClient sender, String listNo) {
+	public void seeCategory(SocketClient sender, String listNo, JSONObject jsonUpdata) {
 		CategoryView category = new CategoryView();
+		CategoryService categoryService = new CategoryService();
+		BookDetailView bookDetailView = new BookDetailView();
 		JSONObject root= new JSONObject();
 		String json="";
 		switch(listNo) {
@@ -119,7 +128,10 @@ public class SocketClient {
 				sender.send(json);
 				break;
 			case "1":
+				categoryService.showCategory(sender,jsonUpdata);
 				break;
+			case "2" :
+				bookDetailView.bookDetail(sender, jsonUpdata);
 		}
 	}
 	
@@ -260,6 +272,14 @@ public class SocketClient {
 			socket.close();
 		} catch (IOException e) {
 		}
+	}
+
+	public DTOBook getBookD() {
+		return bookD;
+	}
+
+	public void setBookD(DTOBook bookD) {
+		this.bookD = bookD;
 	}
 	
 	
